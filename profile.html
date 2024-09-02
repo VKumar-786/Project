@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile - Self-Billing System</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Times New Roman', serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        background: #333;
+        color: #fff;
+    }
+    header {
+        background: linear-gradient(135deg, #5ABF3F, #4a9c35);
+        border: 2px solid #5ABF3F;
+        padding: 15px 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+        margin: 20px;
+        transition: transform 0.6s;
+    }
+    header:hover {
+        transform: rotateX(-5deg) rotateY(-5deg);
+    }
+    header h1 {
+        margin: 0;
+        font-family: 'Times New Roman', serif;
+        color: #fff;
+        font-size: 2em;
+        text-align: center;
+    }
+    nav {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    nav a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 5px;
+        background: rgba(0, 0, 0, 0.6);
+        transition: background 0.3s, transform 0.3s;
+    }
+    nav a:hover {
+        background: #5ABF3F;
+        transform: scale(1.1);
+    }
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        padding: 20px;
+        text-align: center;
+    }
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        width: 100%;
+        max-width: 1000px;
+        backdrop-filter: blur(10px);
+        position: relative;
+    }
+    .profile-info {
+        text-align: center;
+        flex: 1;
+        margin-bottom: 20px;
+    }
+    .profile-info p {
+        margin: 5px 0;
+        font-size: 1.1em;
+    }
+    .profile-image {
+        flex: 0 0 150px;
+        height: 150px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 5px solid #5ABF3F;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .profile-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .update-button {
+        background: #5ABF3F;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: background 0.3s;
+    }
+    .update-button:hover {
+        background: #4a9c35;
+    }
+    .update-form {
+        display: none;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 300px;
+        text-align: left;
+    }
+    .update-form input, .update-form button {
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 1em;
+    }
+    .update-form button {
+        background: #5ABF3F;
+        color: #fff;
+        cursor: pointer;
+    }
+    .update-form button:hover {
+        background: #4a9c35;
+    }
+    footer {
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 10px;
+        text-align: center;
+        color: #5ABF3F;
+    }
+
+    @media (min-width: 768px) {
+        header {
+            flex-direction: row;
+            padding: 20px 40px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+        }
+
+        nav {
+            flex-direction: row;
+            margin-top: 0;
+        }
+
+        .container {
+            flex-direction: row;
+            padding: 30px;
+        }
+
+        .content {
+            flex-direction: row;
+            padding: 30px;
+        }
+
+        .profile-info {
+            text-align: left;
+            margin-right: 20px;
+            margin-bottom: 0;
+        }
+
+        .profile-image {
+            margin: 0;
+        }
+    }
+</style>
+</head>
+<body>
+<header>
+    <h1>Self-Billing System</h1>
+    <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="profile.html">Profile</a>
+        <a href="settings.html">Settings</a>
+        <a href="dashboard.html" onclick="logout()">Logout</a>
+    </nav>
+</header>
+
+<main>
+    <section class="container">
+        <div class="content">
+            <div class="profile-info">
+                <h2>Profile</h2>
+                <p><strong>Name:</strong> <span id="profile-name">Kumar</span></p>
+                <p><strong>User ID:</strong> <span id="profile-id">IN123456</span></p>
+                <p><strong>Age:</strong> <span id="profile-age">20</span></p>
+                <p><strong>Gender:</strong> <span id="profile-gender">Male</span></p>
+                <p><strong>Place:</strong> <span id="profile-place">hyderabad </span></p>
+                <p><strong>Mobile:</strong> <span id="profile-mobile">+91 9347926583</span></p>
+                <p><strong>Email:</strong> <span id="profile-email">Kumar@gmail.com</span></p>
+            </div>
+            <div class="profile-image">
+                <img src="pic.jpg" alt="Profile Image">
+            </div>
+            <button class="update-button" onclick="toggleUpdateForm()">Update Profile</button>
+            <div class="update-form" id="update-form">
+                <h3>Update Profile</h3>
+                <form onsubmit="return saveChanges()">
+                    <input type="text" id="update-name" placeholder="Name">
+                    <input type="text" id="update-id" placeholder="User ID">
+                    <input type="number" id="update-age" placeholder="Age">
+                    <input type="text" id="update-gender" placeholder="Gender">
+                    <input type="text" id="update-place" placeholder="Place">
+                    <input type="tel" id="update-mobile" placeholder="Mobile">
+                    <input type="email" id="update-email" placeholder="Email">
+                    <button type="submit">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2024 Self-Billing System. All rights reserved.</p>
+</footer>
+
+<script>
+function logout() {
+    alert("You have been logged out.");
+    window.location.href = 'login.html';
+}
+
+function toggleUpdateForm() {
+    const updateForm = document.getElementById('update-form');
+    updateForm.style.display = updateForm.style.display === 'block' ? 'none' : 'block';
+}
+
+function saveChanges() {
+    // Prevent form from submitting the traditional way
+    event.preventDefault();
+    
+    // Get updated values
+    const name = document.getElementById('update-name').value;
+    const userId = document.getElementById('update-id').value;
+    const age = document.getElementById('update-age').value;
+    const gender = document.getElementById('update-gender').value;
+    const place = document.getElementById('update-place').value;
+    const mobile = document.getElementById('update-mobile').value;
+    const email = document.getElementById('update-email').value;
+    
+    // Update profile info on the page
+    document.getElementById('profile-name').textContent = name;
+    document.getElementById('profile-id').textContent = userId;
+    document.getElementById('profile-age').textContent = age;
+    document.getElementById('profile-gender').textContent = gender;
+    document.getElementById('profile-place').textContent = place;
+    document.getElementById('profile-mobile').textContent = mobile;
+    document.getElementById('profile-email').textContent = email;
+    
+    // Hide update form
+    toggleUpdateForm();
+    
+    // Optionally, you can add code here to send updated data to the server
+    
+    return false; // Prevent page refresh
+}
+</script>
+</body>
+</html>
+

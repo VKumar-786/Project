@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings - Self-Billing System</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Times New Roman', serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        background: #333;
+        color: #fff;
+        perspective: 1000px;
+    }
+    header {
+        background: linear-gradient(135deg, #5ABF3F, #4a9c35);
+        border: 2px solid #5ABF3F;
+        padding: 15px 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+        margin: 20px;
+        transition: transform 0.6s;
+    }
+    header:hover {
+        transform: rotateX(-5deg) rotateY(-5deg);
+    }
+    header h1 {
+        margin: 0;
+        font-family: 'Times New Roman', serif;
+        color: #fff;
+        font-size: 2em;
+        text-align: center;
+    }
+    nav {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    nav a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 5px;
+        background: rgba(0, 0, 0, 0.6);
+        transition: background 0.3s, transform 0.3s;
+    }
+    nav a:hover {
+        background: #5ABF3F;
+        transform: scale(1.1);
+    }
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        padding: 20px;
+        text-align: center;
+    }
+    .content {
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        width: 100%;
+        max-width: 800px;
+        backdrop-filter: blur(10px);
+    }
+    h2 {
+        margin-bottom: 20px;
+        color: #5ABF3F;
+    }
+    .form-group {
+        margin-bottom: 30px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #555;
+        border-radius: 5px;
+        background: #222;
+        color: #fff;
+        margin-bottom: 10px;
+    }
+    .form-group button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background: #5ABF3F;
+        color: #fff;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    .form-group button:hover {
+        background: #4a9c35;
+    }
+    footer {
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 10px;
+        text-align: center;
+        color: #5ABF3F;
+    }
+
+    @media (min-width: 768px) {
+        header {
+            flex-direction: row;
+            padding: 20px 40px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+        }
+
+        nav {
+            flex-direction: row;
+            margin-top: 0;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .form-group input {
+            font-size: 1.1em;
+        }
+
+        .form-group button {
+            font-size: 1.1em;
+        }
+    }
+</style>
+</head>
+<body>
+<header>
+    <h1>Self-Billing System</h1>
+    <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="profile.html">Profile</a>
+        <a href="settings.html">Settings</a>
+        <a href="#" onclick="logout(event)">Logout</a>
+    </nav>
+</header>
+
+<main>
+    <section class="container">
+        <div class="content">
+            <h2>Settings</h2>
+
+            <!-- Change Password Form -->
+            <div class="form-group">
+                <h3>Change Password</h3>
+                <form action="/change-password" method="POST">
+                    <label for="current-password">Current Password</label>
+                    <input type="password" id="current-password" name="current-password" required>
+
+                    <label for="new-password">New Password</label>
+                    <input type="password" id="new-password" name="new-password" required>
+
+                    <label for="confirm-password">Confirm New Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required>
+
+                    <button type="submit">Change Password</button>
+                </form>
+            </div>
+
+            <!-- Deactivate Account Form -->
+            <div class="form-group">
+                <h3>Deactivate Account</h3>
+                <form action="/deactivate-account" method="POST">
+                    <p>Are you sure you want to deactivate your account? This action cannot be undone.</p>
+                    <button type="submit">Deactivate Account</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2024 Self-Billing System. All rights reserved.</p>
+</footer>
+
+<script>
+function logout(event) {
+    event.preventDefault(); // Prevent the default anchor behavior
+    alert("You have been logged out.");
+    window.location.href = 'dashboard.html'; // Redirect to login page
+}
+</script>
+</body>
+</html>

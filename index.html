@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-Billing System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: background-image 0.5s ease-in-out;
+            color: #fff;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        a {
+            color: inherit;
+        }
+        /* Header Styles */
+        header {
+            background: linear-gradient(90deg, #5ABF3F, #4a9c35);
+            border: 2px solid #5ABF3F;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            margin: 10px 20px;
+            transition: transform 0.3s ease-in-out;
+            position: relative;
+            z-index: 10; /* Ensure header is above content */
+        }
+        header:hover {
+            transform: perspective(600px) rotateX(2deg) rotateY(2deg);
+        }
+        header h1 {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            color: #fff;
+            font-size: 1.8em;
+        }
+        /* Navigation Styles */
+        nav {
+            display: flex;
+            gap: 10px;
+            z-index: 11; /* Ensure nav is above content */
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 5px;
+            background: rgba(0, 0, 0, 0.6);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #5ABF3F;
+            transform: scale(1.05);
+        }
+        /* Hamburger Menu (Mobile) */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 12; /* Ensure hamburger is above content */
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 4px 0;
+            transition: all 0.3s ease;
+        }
+        /* Container Styles */
+        .container {
+            display: none;
+            flex: 1;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+            z-index: 1; /* Ensure content is below header and nav */
+        }
+        .container.active {
+            display: flex;
+        }
+        .content {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            width: 100%;
+            max-width: 600px;
+            backdrop-filter: blur(10px);
+        }
+        h2 {
+            margin-bottom: 15px;
+            font-family: 'Montserrat', sans-serif;
+            color: #5ABF3F;
+            font-size: 1.5em;
+        }
+        p, ul, ol {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            font-size: 1em;
+        }
+        ul, ol {
+            padding-left: 20px;
+            text-align: left;
+        }
+        ul li, ol li {
+            margin-bottom: 10px;
+        }
+        /* Form Styles */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        input[type="text"], 
+        input[type="password"], 
+        input[type="email"], 
+        input[type="tel"], 
+        textarea {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 1em;
+        }
+        input[type="submit"], 
+        input[type="button"] {
+            background-color: #5ABF3F;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        input[type="submit"]:hover, 
+        input[type="button"]:hover {
+            background-color: #4a9d30;
+            transform: scale(1.02);
+        }
+        /* Footer Styles */
+        footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 10px 20px;
+            text-align: center;
+            color: #fff;
+            font-size: 0.9em;
+        }
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            nav {
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                background-color: rgba(0, 0, 0, 0.8);
+                flex-direction: column;
+                width: 200px;
+                display: none;
+                border-radius: 8px;
+                padding: 10px 0;
+            }
+            nav.active {
+                display: flex;
+            }
+            nav a {
+                padding: 10px 20px;
+                margin: 5px 0;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .container .content {
+                padding: 20px;
+            }
+            h2 {
+                font-size: 1.3em;
+            }
+            input[type="submit"], 
+            input[type="button"] {
+                padding: 10px;
+            }
+        }
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.5em;
+            }
+            .content {
+                padding: 15px;
+            }
+            h2 {
+                font-size: 1.2em;
+            }
+            input[type="text"], 
+            input[type="password"], 
+            input[type="email"], 
+            input[type="tel"], 
+            textarea {
+                font-size: 0.9em;
+            }
+            input[type="submit"], 
+            input[type="button"] {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <h1>Self-Billing System</h1>
+        <nav id="nav-menu">
+            <a href="#" onclick="showContainer('home-container')">Home</a>
+            <a href="#" onclick="showContainer('login-container')">Login</a>
+            <a href="#" onclick="showContainer('register-container')">Sign Up</a>
+            <a href="#" onclick="showContainer('about-container')">About Us</a>
+            <a href="#" onclick="showContainer('contact-container')">Contact Us</a>
+        </nav>
+        <!-- Hamburger Menu for Mobile -->
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </header>
+
+    <!-- Home Container -->
+    <div class="container active" id="home-container">
+        <div class="content">
+            <h2>Welcome to Self-Billing Retail Solutions</h2>
+            <p><em>"Empowering Retailers, Delighting Customers"</em></p>
+            <p>At Self-Billing, we believe in revolutionizing the retail experience through seamless self-billing technology. Say goodbye to long queues and manual billing hassles—our innovative solution streamlines the checkout process, making shopping a breeze for both retailers and customers.</p>
+            <h3>Our Mission</h3>
+            <p>Our mission is simple: to transform the way people shop by leveraging cutting-edge technology. We're committed to enhancing operational efficiency for retailers while providing an exceptional and convenient shopping experience for customers.</p>
+            <h3>Why Choose Self-Billing?</h3>
+            <ul>
+                <li><strong>Efficiency:</strong> Say goodbye to long checkout lines. With Self-Billing, billing is quick, easy, and hassle-free.</li>
+                <li><strong>Convenience:</strong> Shop at your own pace. Our self-billing system allows you to scan and pay for items effortlessly, right from your smartphone.</li>
+                <li><strong>Innovation:</strong> We're at the forefront of retail technology, ensuring that you always have access to the latest advancements in the industry.</li>
+                <li><strong>Support:</strong> Our dedicated team is here to assist you every step of the way. We offer comprehensive support to ensure that your self-billing system runs smoothly.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Login Container -->
+    <div class="container" id="login-container">
+        <div class="content">
+            <h2>Login</h2>
+            <form id="login-form">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <input type="submit" value="Login">
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Container -->
+    <div class="container" id="register-container">
+        <div class="content">
+            <h2>Sign Up</h2>
+            <form>
+                <input type="text" placeholder="Full Name">
+                <input type="email" placeholder="Email">
+                <input type="tel" placeholder="Phone Number">
+                <input type="password" placeholder="Password">
+                <input type="submit" value="Sign Up">
+            </form>
+        </div>
+    </div>
+
+    <!-- About Us Container -->
+    <div class="container" id="about-container">
+        <div class="content">
+            <h2>About Us</h2>
+            <p>Self-Billing is dedicated to transforming the retail experience by providing cutting-edge solutions that empower both retailers and customers. Our team of experts is passionate about innovation and is always exploring new ways to enhance the shopping experience.</p>
+            <p>We believe in creating a future where shopping is more enjoyable, efficient, and convenient for everyone. Whether you're a retailer looking to improve your operations or a customer seeking a more seamless shopping experience, Self-Billing is here to help.</p>
+            <p>Join us on this exciting journey and discover the future of retail with Self-Billing!</p>
+        </div>
+    </div>
+
+    <!-- Contact Us Container -->
+    <div class="container" id="contact-container">
+        <div class="content">
+            <h2>Contact Us</h2>
+            <p>We'd love to hear from you! Whether you have questions about our services, need support, or just want to share your feedback, our team is here to assist you.</p>
+            <form>
+                <input type="text" placeholder="Your Name">
+                <input type="email" placeholder="Your Email">
+                <textarea placeholder="Your Message" rows="5"></textarea>
+                <input type="submit" value="Send Message">
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Self-Billing Retail Solutions. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Toggle the hamburger menu
+        function toggleMenu() {
+            var navMenu = document.getElementById('nav-menu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Show the corresponding container and hide others
+        function showContainer(containerId) {
+            var containers = document.querySelectorAll('.container');
+            containers.forEach(function(container) {
+                container.classList.remove('active');
+            });
+            document.getElementById(containerId).classList.add('active');
+        }
+
+        // Handle login form submission
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
+            // Add login validation here if necessary
+            window.location.href = 'dashboard.html'; // Redirect to dashboard.html on successful login
+        });
+    </script>
+</body>
+</html>

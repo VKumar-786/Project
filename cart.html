@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #cart-container {
+            width: 90%;
+            max-width: 640px;
+            max-height: 400px;
+            overflow-y: scroll;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        #cart-products {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #cart-products li {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-info {
+            text-align: left;
+            flex-grow: 1;
+        }
+
+        .quantity {
+            font-size: 16px;
+            padding: 0 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        @media (min-width: 768px) {
+            #cart-container {
+                width: 640px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Cart</h1>
+    <div id="cart-container">
+        <ul id="cart-products"></ul>
+    </div>
+    <button onclick="moveToBilling()">Move to Billing</button>
+
+    <script>
+        function loadCart() {
+            const scannedProducts = JSON.parse(localStorage.getItem('scannedProducts')) || [];
+            const details = {
+                "123456": {
+                    name: "Soap",
+                    price: "20 INR",
+                    weight: "50g",
+                    discount: "5%",
+                    expiryDate: "2024-12-31"
+                },
+                "789012": {
+                    name: "Shampoo",
+                    price: "120 INR",
+                    weight: "200ml",
+                    discount: "10%",
+                    expiryDate: "2024-11-30"
+                }
+            };
+            const productList = document.getElementById('cart-products');
+
+            scannedProducts.forEach(product => {
+                const productDetails = details[product.barcode];
+                if (productDetails) {
+                    const item = document.createElement('li');
+                    item.innerHTML = `
+                        <div class="product-info">
+                            <p><strong>Name:</strong> ${productDetails.name}</p>
+                            <p><strong>Price:</strong> ${productDetails.price}</p>
+                            <p><strong>Weight:</strong> ${productDetails.weight}</p>
+                            <p><strong>Discount:</strong> ${productDetails.discount}</p>
+                            <p><strong>Expiry Date:</strong> ${productDetails.expiryDate}</p>
+                        </div>
+                        <span class="quantity"><strong>Quantity:</strong> ${product.quantity}</span>
+                    `;
+                    productList.appendChild(item);
+                }
+            });
+        }
+
+        function moveToBilling() {
+            window.location.href = 'billing.html'; // Redirect to the billing page
+        }
+
+        // Load the cart when the page is loaded
+        window.onload = loadCart;
+    </script>
+</body>
+</html>
+

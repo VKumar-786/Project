@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #e9ecef;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        #billing-container {
+            width: 90%;
+            max-width: 500px;
+            background-color: #fff;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        #billing-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .bill-summary {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .bill-summary p {
+            margin: 10px 0;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background-color: #28a745;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background-color: #218838;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (min-width: 768px) {
+            #billing-container {
+                width: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Billing Summary</h1>
+    <div id="billing-container">
+        <div class="bill-summary">
+            <p>Total Price: <span id="total-price">0</span> INR</p>
+            <p>Total Discount: <span id="total-discount">0</span> INR</p>
+            <p>Total Bill: <span id="total-bill">0</span> INR</p>
+        </div>
+    </div>
+    <button onclick="confirmPayment()">Confirm Payment</button>
+
+    <script>
+        function calculateBill() {
+            const scannedProducts = JSON.parse(localStorage.getItem('scannedProducts')) || [];
+            const details = {
+                "123456": {
+                    name: "Soap",
+                    price: 20,
+                    weight: 50, // Weight in grams
+                    discount: 5,
+                    expiryDate: "2024-12-31"
+                },
+                "789012": {
+                    name: "Shampoo",
+                    price: 120,
+                    weight: 200, // Weight in ml
+                    discount: 10,
+                    expiryDate: "2024-11-30"
+                }
+            };
+
+            let totalPrice = 0;
+            let totalDiscount = 0;
+            let totalWeight = 0;
+
+            scannedProducts.forEach(product => {
+                const productDetails = details[product.barcode];
+                if (productDetails) {
+                    const itemPrice = productDetails.price * product.quantity;
+                    const itemDiscount = (itemPrice * productDetails.discount) / 100;
+
+                    totalPrice += itemPrice;
+                    totalDiscount += itemDiscount;
+                    totalWeight += productDetails.weight * product.quantity; // Calculate total weight
+                }
+            });
+
+            const totalBill = totalPrice - totalDiscount;
+
+            document.getElementById('total-price').innerText = totalPrice.toFixed(2);
+            document.getElementById('total-discount').innerText = totalDiscount.toFixed(2);
+            document.getElementById('total-bill').innerText = totalBill.toFixed(2);
+
+            // Save total weight to localStorage
+            localStorage.setItem('totalWeight', totalWeight); // Save the total weight
+        }
+
+        function confirmPayment() {
+            alert("Payment confirmed!");
+            window.location.href = 'checkout.html'; // Redirect to the checkout page
+        }
+
+        window.onload = calculateBill;
+    </script>
+</body>
+</html>

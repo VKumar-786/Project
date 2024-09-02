@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard - Self-Billing System</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Times New Roman', serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        background: #333;
+        color: #fff;
+    }
+    header {
+        background: linear-gradient(135deg, #5ABF3F, #4a9c35);
+        border: 2px solid #5ABF3F;
+        padding: 15px 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+        margin: 20px;
+        transition: transform 0.6s;
+    }
+    header:hover {
+        transform: rotateX(-5deg) rotateY(-5deg);
+    }
+    header h1 {
+        margin: 0;
+        font-family: 'Times New Roman', serif;
+        color: #fff;
+        font-size: 2em;
+        text-align: center;
+    }
+    nav {
+        display: flex;
+        justify-content: center; /* Centering the nav content */
+        gap: 10px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+    }
+    nav a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 5px;
+        background: rgba(0, 0, 0, 0.6);
+        transition: background 0.3s, transform 0.3s;
+        flex-grow: 1;
+        text-align: center;
+    }
+    nav a:hover {
+        background: #5ABF3F;
+        transform: scale(1.1);
+    }
+    main {
+        display: flex;
+        flex-grow: 1;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
+        padding: 10px;
+    }
+    .container {
+        text-align: center;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        width: 100%;
+        max-width: 800px;
+        backdrop-filter: blur(10px);
+    }
+    .info-box {
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 10px;
+        padding: 20px;
+        margin: 10px 0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .info-box h3 {
+        margin-top: 0;
+        color: #5ABF3F;
+    }
+    .start-shopping-button {
+        margin-top: 30px;
+        width: 80%;
+        max-width: 300px;
+        padding: 15px;
+        border-radius: 50px;
+        background-color: #5ABF3F;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1.2em;
+        text-transform: uppercase;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+    .start-shopping-button:hover {
+        background-color: #4a9c35;
+        transform: scale(1.1);
+    }
+    footer {
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 10px;
+        text-align: center;
+        color: #5ABF3F;
+    }
+
+    @media (min-width: 768px) {
+        header {
+            flex-direction: row;
+            justify-content: space-between; /* Spacing the header content */
+            padding: 20px 40px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+        }
+
+        nav {
+            flex-direction: row;
+            justify-content: center; /* Ensure nav content is centered on larger screens */
+            margin-top: 0;
+            flex-wrap: nowrap;
+        }
+
+        .container {
+            padding: 30px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        header {
+            padding: 10px 20px;
+            margin: 10px;
+        }
+
+        header h1 {
+            font-size: 1.5em;
+        }
+
+        nav a {
+            padding: 8px 15px;
+            font-size: 0.9em;
+        }
+
+        .container {
+            padding: 15px;
+            max-width: 90%;
+        }
+
+        .info-box {
+            padding: 15px;
+        }
+
+        .start-shopping-button {
+            width: 100%;
+            max-width: 250px;
+            padding: 10px;
+            font-size: 1em;
+        }
+    }
+</style>
+</head>
+<body>
+<header>
+    <h1>Self-Billing System</h1>
+    <nav>
+        <a href="#" onclick="showDashboard()">Dashboard</a>
+        <a href="#" onclick="showProfile()">Profile</a>
+        <a href="#" onclick="showSettings()">Settings</a>
+        <a href="#" onclick="logout()">Logout</a>
+    </nav>
+</header>
+
+<main>
+    <section class="container" id="dashboard-container" style="display:block;">
+        <div class="content">
+            <div class="welcome-message">Welcome to the Self-Billing System!</div>
+            <div class="info-box">
+                <h3>System Overview</h3>
+                <p>Here you can manage your shopping experience, scan products, view your cart, and proceed to checkout.</p>
+            </div>
+            <div class="info-box">
+                <h3>Recent Activity</h3>
+                <p>Check out your recent scans, purchases, and more right here.</p>
+            </div>
+            <button class="start-shopping-button" onclick="startShopping()">Start Shopping</button>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2024 Self-Billing System. All rights reserved.</p>
+</footer>
+
+<script>
+function startShopping() {
+    window.location.href = 'scanner.html'; // Redirect to the scanner page
+}
+
+function showDashboard() {
+    document.getElementById("dashboard-container").style.display = "block";
+    // Hide other containers if needed
+}
+
+function showProfile() {
+    window.location.href = 'profile.html'; // Redirect to the profile page
+}
+
+function showSettings() {
+    window.location.href = 'settings.html'; // Redirect to the settings page
+}
+
+function logout() {
+    alert("You have been logged out.");
+    window.location.href = 'index.html'; // Redirect to index.html and scroll to the login container
+}
+
+</script>
+</body>
+</html>
+
